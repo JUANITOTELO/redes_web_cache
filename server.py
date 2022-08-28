@@ -1,3 +1,4 @@
+from email import message
 from socket import *
 from dataReader import update_csv_file
 
@@ -6,7 +7,7 @@ s.connect(("8.8.8.8", 80))
 print("+\nIP Address: {}\n".format(s.getsockname()[0]))
 s.close()
 
-servidorPuerto = 12001
+servidorPuerto = 12000
 servidorSocket = socket(AF_INET,SOCK_STREAM)
 servidorSocket.bind(('',servidorPuerto))
 servidorSocket.listen(1)

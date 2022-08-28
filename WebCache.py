@@ -1,16 +1,16 @@
 from socket import *
 import csv
 
-archivos_ex = []
-with open('Archivos.csv', newline='') as csvfile:
+dir_cache_ex = []
+with open('dir_cache.csv', newline='') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=' ')
     for row in spamreader:
-        archivos_ex.append(', '.join(row))
+        dir_cache_ex.append(', '.join(row))
         #print(', '.join(row))
 
-archivos = []
-for i in range(1,len(archivos_ex)):
-    archivos.append(archivos_ex[i])
+dir_cache = []
+for i in range(1,len(dir_cache_ex)):
+    dir_cache.append(dir_cache_ex[i])
 
 
 #Conexión con el cliente
@@ -24,15 +24,17 @@ while 1:
     print("Conexión establecida con ", webDireccion)
     mensaje = str( conexionSocket.recv(1024), "utf-8" )
     print("Mensaje recibido de ", webDireccion)
-    print(mensaje)
-    mensajeRespuesta1 = mensaje.upper()
+    mensaje_server = mensaje
+    mensaje = mensaje.split(" ")
+    mensajeRespuesta1 = mensaje[1].upper()
     print(mensajeRespuesta1)
 
-    if mensaje in archivos:
+    if mensaje[0] == "GET" and mensaje[1] in dir_cache:
         mensajeRespuesta = "El archivo se encontró..."
         print(mensajeRespuesta)
         conexionSocket.send(bytes(mensajeRespuesta, "utf-8"))
         conexionSocket.close()
+
     else:
     
     
@@ -41,8 +43,8 @@ while 1:
         servidorPuerto = 12000
         webSocket = socket(AF_INET, SOCK_STREAM)
         webSocket.connect((servidorNombre,servidorPuerto))
-        mensaje = input("Ingrese un mensaje:")
-        webSocket.send(bytes(mensaje, "utf-8"))
+        #mensaje = input("Ingrese un mensaje:")
+        webSocket.send(bytes(mensaje_server, "utf-8"))
         mensajeRespuesta = webSocket.recv(1024)
         mensajeRespuesta2 = str( mensajeRespuesta, "utf-8" )
         print("Respuesta:\n" + str(mensajeRespuesta, "utf-8"))
@@ -51,3 +53,15 @@ while 1:
         conexionSocket.send(bytes(mensajeRespuesta2, "utf-8"))
         conexionSocket.close()
     
+
+    
+
+    
+
+        
+
+    
+
+        
+
+
