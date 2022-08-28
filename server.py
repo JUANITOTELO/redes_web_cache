@@ -1,4 +1,3 @@
-from email import message
 from socket import *
 from dataReader import update_csv_file
 
