@@ -31,7 +31,7 @@ while True:
 
             if command[0] == "GET":
 
-                if len(command) == 1:
+                while len(command) == 1:
                     command += input("Enter object name: ").split()
 
                 if len(command) > 2:
