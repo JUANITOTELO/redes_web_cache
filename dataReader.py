@@ -3,10 +3,9 @@ from sys import platform
 import os
 def update_csv_file():
     path = ''
-    match platform:
-        case 'linux':
+    if platform == 'linux':
             path = 'files/'
-        case 'win32':
+    elif platform == 'win32':
             path = 'files\\'
     dir_list = os.listdir(path)
 
