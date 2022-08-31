@@ -30,6 +30,3 @@ def update_csv_file():
             fileNames.append(row[0].lower())
             print(row)
         return fileNames[1:]
-
-names = update_csv_file()
-print("\n{}".format(names))
