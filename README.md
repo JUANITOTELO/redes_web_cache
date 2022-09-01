@@ -3,7 +3,7 @@ Realizado por Juan David Martínez, Juan Nicolás Sepulveda y Juan Esteban Velan
 
 ## Requisitos
 - Descomprimir el archivo zip
-- Para ejecutar cada archivo ingresar a la carpeta correspondiente y ejecutarlo en el siguiente orden:
+- Para ejecutar cada archivo ingresar a la carpeta correspondiente y ejecutarlo desde la CMD/Terminal en el siguiente orden:
     - server
         - server.py
     - webCache
