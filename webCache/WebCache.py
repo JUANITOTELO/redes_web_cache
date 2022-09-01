@@ -40,17 +40,36 @@ while 1:
             webSocket.send(bytes(mensaje_server, "utf-8"))
             mensajeRespuesta = webSocket.recv(1024)
             mensajeRespuesta2 = str(mensajeRespuesta, "utf-8")
-            webSocket.close()
 
             if str(mensajeRespuesta, "utf-8") == "404: Not Found":
                 print("Respuesta:\n" + str(mensajeRespuesta, "utf-8"))
             else:
+                # receive the file infos
+                # receive using client socket, not server socket
+                SEPARATOR = ":><:"
+                BUFFER_SIZE = 1024
+                received = webSocket.recv(BUFFER_SIZE).decode()
+                filename, filesize = received.split(SEPARATOR)
+                # remove absolute path if there is
+                #filename = os.path.basename(filename)
+                # convert to integer
+                filesize = int(filesize)
+                with open(filename, "wb") as f:
+                    while True:
+                        # read 1024 bytes from the socket (receive)
+                        bytes_read = client_socket.recv(BUFFER_SIZE)
+                        if not bytes_read:    
+                            # nothing is received
+                            # file transmitting is done
+                            break
+                        # write to the file the bytes we just received
+                        f.write(bytes_read)
                 mensajeRespuesta2 = "File found!\n200: OK\n- " + str(mensajeRespuesta, "utf-8")
                 print(mensajeRespuesta2)
 
                 with open('dir_cache.txt', 'a') as files:
                     print(str(mensajeRespuesta, "utf-8"), file=files)
-                files.close()
+                    files.close()
 
             sleep(0.25)
             conexionSocket.send(bytes(mensajeRespuesta2, "utf-8"))

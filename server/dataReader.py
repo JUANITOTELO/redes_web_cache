@@ -1,12 +1,15 @@
 import csv
 from sys import platform
 import os
+
+path = ''
+if platform == 'linux':
+        path = 'files/'
+elif platform == 'win32':
+        path = 'files\\'
+
+
 def update_csv_file():
-    path = ''
-    if platform == 'linux':
-            path = 'files/'
-    elif platform == 'win32':
-            path = 'files\\'
     dir_list = os.listdir(path)
 
     with open('dir.csv', 'w', newline='') as csvfile:
@@ -27,6 +30,6 @@ def update_csv_file():
         reader = csv.reader(f)
         fileNames = []
         for row in reader:
-            fileNames.append(row[0].lower())
+            fileNames.append(row[0])
             print(row)
         return fileNames[1:]
