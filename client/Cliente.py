@@ -42,15 +42,22 @@ while True:
                 while len(command) == 1:
                     command += input("Enter object name: ").split()
 
-                if len(command) > 2:
-                    print("Invalid \"GET\" input: try replacing blank spaces \" \" with underscores \"_\"")
+                while len(command) == 2:
+                    command += input("Enter HTTP version:").split()
+
+                if len(command) == 3 and command[2] != "HTTP/1.1":
+                    print("Invalid HTTP version: Only version supported is \"HTTP/1.1\". Alternatively you may have forgotten to type your file name")
+                    continue
+
+                if len(command) > 3:
+                    print("Invalid \"GET\" input: try replacing blank spaces \" \" with underscores \"_\" in your file name")
                     continue
 
             elif len(command) != 1:
                 print(f"invalid {command[0]} input: this command doesn't accept any extra parameter(s)")
                 continue
 
-            message = " ".join(command)
+            message = " ".join(command[0:2])
             clienteSocket.send(bytes(message, "utf-8"))
             server_response = clienteSocket.recv(1024)
             server_response = str(server_response, "utf_8")
@@ -77,7 +84,7 @@ while True:
                 sleep(1 * r / 20)
 
             c = input("\nFeeling lucky? (Y/N): \n")
-            if c and c.lower() == "y":
+            if c and c.lower() == "n":
                 server_response = """
             
                   _    _                                                 _ 
@@ -89,8 +96,8 @@ while True:
                                           __/ |               __/ |        
                                          |___/               |___/         
                             
-                
-                                        (
+                                         )
+                                        (      )
                                         )     (
                                  ___...(-------)-....___
                              .-""       )    (          ""-.
@@ -114,7 +121,7 @@ while True:
                                       `""------""`"""
 
 
-            elif c.lower() == "n":
+            elif c.lower() == "y":
                 server_response = """
                 
                   _  _  __  ___         _____ _                      _                         _     _ 
@@ -171,10 +178,11 @@ while True:
             server_response = ""
 
         else:
-            print("Invalid command!")
+            print("400: BAD REQUEST")
             continue
 
         print(server_response)
 
         if accepted:
             clienteSocket.close()
+

@@ -45,7 +45,7 @@ while 1:
             if str(mensajeRespuesta, "utf-8") == "404: Not Found":
                 print("Respuesta:\n" + str(mensajeRespuesta, "utf-8"))
             else:
-                mensajeRespuesta2 = "File found!\n200: OK\n- " + str(mensajeRespuesta, "utf-8")
+                mensajeRespuesta2 = "200: OK\n- " + str(mensajeRespuesta, "utf-8")
                 print(mensajeRespuesta2)
 
                 with open('dir_cache.txt', 'a') as files:
